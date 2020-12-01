@@ -1,0 +1,9 @@
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\bin\Debug\netcoreapp3.1\MonitorDeks.Data.deps.json
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\bin\Debug\netcoreapp3.1\MonitorDeks.Data.dll
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.csprojAssemblyReference.cache
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.AssemblyInfoInputs.cache
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.AssemblyInfo.cs
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\bin\Debug\netcoreapp3.1\MonitorDeks.Data.pdb
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.csproj.CoreCompileInputs.cache
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.dll
+C:\Users\RYIAN\MonitorDeks\MonitorDeks.Data\obj\Debug\netcoreapp3.1\MonitorDeks.Data.pdb
