@@ -26,6 +26,7 @@ export class TaskService{
     }
 
     public async deleteTask(Id: number): Promise<boolean> {
+        await axios.delete(`${this.API_URL}/document/by/task/${Id}`);
         const result: any = await axios.delete(`${this.API_URL}/task/${Id}`);
         return result.data;
     };

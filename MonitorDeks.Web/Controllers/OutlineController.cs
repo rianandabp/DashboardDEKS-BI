@@ -9,6 +9,7 @@ using DashboardDeks.Web.ViewModel;
 using DashboardDeks.Web.Serialization;
 using DashboardDeks.Services.Notification;
 using DashboardDeks.Data.Models;
+using DashboardDeks.Services.Task;
 
 namespace DashboardDeks.Web.Controllers
 {
@@ -87,6 +88,15 @@ namespace DashboardDeks.Web.Controllers
             _logger.LogInformation("Deleting a outline");
             var response = _outlineService.DeleteOutline(id);
             return Ok(response);
+        }
+
+        [HttpDelete("/api/outline/by/program/{id}")]
+        public ActionResult DeleteOutlineByProgramId(int id)
+        {
+            _logger.LogInformation("Deleting a outline by program id");
+            _outlineService.DeleteByProgramId(id);
+            
+            return Ok();
         }
 
         [HttpPatch("/api/outline")]

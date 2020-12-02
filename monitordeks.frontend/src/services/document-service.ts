@@ -19,4 +19,8 @@ export class DocumentService{
         const result: any = await axios.post(`${this.API_URL}/document`, newDocument);
         return result.data;
     };
+
+    public async deleteDocumentByTaskId(Id: number) {
+        await axios.delete(`${this.API_URL}/document/by/task/${Id}`);
+    };
 }

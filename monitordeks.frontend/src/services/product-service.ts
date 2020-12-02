@@ -1,6 +1,5 @@
 import axios from "axios";
 import {IProgram} from "@/types/Program.d.ts";
-import {IOutline} from "@/types/Outline.d.ts";
 import { IServiceResponse } from "@/types/ServiceResponse";
 
 export class ProgramService{
@@ -22,6 +21,9 @@ export class ProgramService{
     };
 
     public async deleteProgram(Id: number): Promise<boolean> {
+        await axios.delete(`${this.API_URL}/outline/by/program/${Id}`);
+        await axios.delete(`${this.API_URL}/task/by/program/${Id}`);
+        await axios.delete(`${this.API_URL}/document/by/program/${Id}`);
         const result: any = await axios.delete(`${this.API_URL}/program/${Id}`);
         return result.data;
     };

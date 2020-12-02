@@ -128,6 +128,22 @@ namespace DashboardDeks.Web.Controllers
             return Ok(response);
         }
 
+        [HttpDelete("/api/task/by/outline/{id}")]
+        public ActionResult DeleteTaskByOutlineId(int id)
+        {
+            _logger.LogInformation("Deleting a task by outline id");
+            _taskService.DeleteTaskByOutlineId(id);
+            return Ok();
+        }
+
+        [HttpDelete("/api/task/by/program/{id}")]
+        public ActionResult DeleteTaskByProgramId(int id)
+        {
+            _logger.LogInformation("Deleting a task by program id");
+            _taskService.DeleteTaskByProgramId(id);
+            return Ok();
+        }
+
         [HttpPatch("/api/task")]
         public ActionResult UpdateTask([FromBody] TaskModel task)
         {

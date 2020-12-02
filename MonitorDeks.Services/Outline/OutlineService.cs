@@ -41,6 +41,16 @@ namespace DashboardDeks.Services.Outline
             }
         }
 
+        public void DeleteByProgramId(int id)
+        {
+            var temp = _db.Outlines.Where(c => c.ProgramId.Equals(id)).ToList();
+            foreach (var item in temp)
+            {
+                _db.Outlines.Remove(item);
+            }
+            _db.SaveChanges();
+        }
+
         public ServiceResponse<bool> DeleteOutline(int id)
         {
             var outline = _db.Outlines.Find(id);

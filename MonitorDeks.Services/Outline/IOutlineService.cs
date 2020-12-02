@@ -13,5 +13,6 @@ namespace DashboardDeks.Services.Outline
         ServiceResponse<bool> DeleteOutline(int id);
         Data.Models.Outline GetById(int id);
         void SetProgressPercentage(int id);
+        void DeleteByProgramId(int id);
     }
 }

@@ -44,19 +44,18 @@
                             <b-col id="left"> <div id="ini"> <h6 id="name"> {{index + 1}}. <b-link @click="$bvModal.show('A-' + outline.id)">{{outline.name}}</b-link> </h6> </div> 
                                 <b-progress :value="outline.progressPercentage" :max=100 show-progress animated id="bara"></b-progress>
                             </b-col>
-                                <b-modal :id="'A-' + outline.id" @ok="editOutline(outline.id)" :title="'Edit Outline'">
+                                <b-modal :id="'A-' + outline.id" @show="loadOutlineModal(outline.id)" @ok="editOutline(outline.id,outline.programId)" :title="'Edit Outline'">
                                     <b-form-group label="Outline Name"  >
                                         <b-form-input
-                                            
+                                            v-model="editTemp.name"
                                             size="sm"
                                             placeholder="Write the outline name.."
-                                            v-model="temp.name"
                                         ></b-form-input>
                                     </b-form-group>
                                     <b-form-group label="Progress Note">
                                         <b-form-textarea
                                         id="textarea"
-                                        v-model="temp.progressNote"
+                                        v-model="editTemp.progressNote"
                                         placeholder="Enter something..."
                                         rows="3"
                                         max-rows="6"
@@ -65,14 +64,14 @@
                                     <b-form-group label="Problem Note">
                                         <b-form-textarea
                                             id="textarea2"
-                                            v-model="temp.problemNote"
+                                            v-model="editTemp.problemNote"
                                             placeholder="Enter something..."
                                             rows="3"
                                             max-rows="6"
                                         ></b-form-textarea>
                                     </b-form-group>
                                     <b-form-group label="Deadline"  >
-                                        <b-form-datepicker size="sm" v-model="temp.deadline" class="mb-2"></b-form-datepicker>
+                                        <b-form-datepicker size="sm" v-model="editTemp.deadline" class="mb-2"></b-form-datepicker>
                                     </b-form-group>
                                     <b-button id="dlt" size="sm" variant="danger" @click="deleteOutline(outline.id)"> Delete</b-button>
                                 </b-modal>
@@ -271,10 +270,11 @@ export default class ProgramDetails extends Vue {
     document: IDocument[] = [];
     selectedUser: IUser = {};
     temp: IOutline = {
-        ProgramId: 0,
-        progressNote: "Test",
-        problemNote: "Test"
     };
+
+    editTemp:IOutline = {
+    };
+
     tempTask: ITask = {
         name: ''
     };
@@ -287,7 +287,18 @@ export default class ProgramDetails extends Vue {
         if(sessionStorage.getItem("access") === "administrator") return false;
         else return true;
     }
+
+    loadOutlineModal(id:number){
+        const e = this.outline.find(c => c.id == id);
+        this.editTemp.name = e?.name;
+        this.editTemp.progressNote = e?.progressNote;
+        this.editTemp.problemNote = e?.problemNote;
+        this.editTemp.deadline = e?.deadline;
+    }
+
     
+    
+
     get programSession(){
         return sessionStorage.getItem("program");
     }
@@ -366,9 +377,10 @@ export default class ProgramDetails extends Vue {
         await this.initialize();
     }
 
-    async editOutline(outlineId:number) {
-        this.temp.id = outlineId;
-        await outlineService.editOutline(this.temp);
+    async editOutline(outlineId:number,programId:number) {
+        this.editTemp.id = outlineId;
+        this.editTemp.ProgramId = programId;
+        await outlineService.editOutline(this.editTemp);
         await this.initialize();
     }
 

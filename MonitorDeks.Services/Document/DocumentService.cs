@@ -43,6 +43,26 @@ namespace DashboardDeks.Services.Document
             }
         }
 
+        public void DeleteByProgramId(int id)
+        {
+            var temp = _db.Documents.Where(c => c.ProgramId.Equals(id)).ToList();
+            foreach (var item in temp)
+            {
+                _db.Documents.Remove(item);
+            }
+            _db.SaveChanges();
+        }
+
+        public void DeleteByTaskId(int id)
+        {
+            var temp = _db.Documents.Where(c => c.TaskId.Equals(id)).ToList();
+            foreach (var item in temp)
+            {
+                _db.Documents.Remove(item);
+            }
+            _db.SaveChanges();
+        }
+
         public Data.Models.Document GetById(int id)
         {
             return _db.Documents.Find(id);

@@ -157,6 +157,7 @@ export default class App extends Vue {
         this.tempUser.name = '';
         this.tempUser.usernameId = '';
         this.tempUser.password = '';
+        this.pass = '';
     }
 
     loadUser(id:string){

@@ -238,5 +238,25 @@ namespace DashboardDeks.Services.Task
         {
             return _db.Tasks.Count();
         }
+
+        public void DeleteTaskByOutlineId(int id)
+        {
+            var temp = _db.Tasks.Where(c => c.OutlineId.Equals(id)).ToList();
+            foreach(var item in temp)
+            {
+                _db.Tasks.Remove(item);
+            }
+            _db.SaveChanges();
+        }
+
+        public void DeleteTaskByProgramId(int id)
+        {
+            var temp = _db.Tasks.Where(c => c.ProgramId.Equals(id)).ToList();
+            foreach (var item in temp)
+            {
+                _db.Tasks.Remove(item);
+            }
+            _db.SaveChanges();
+        }
     }
 }

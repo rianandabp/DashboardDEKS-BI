@@ -12,6 +12,7 @@ namespace DashboardDeks.Services.Document
         List<Data.Models.Document> GetByProgramId(int id);
         List<Data.Models.Document> GetByTaskId(int id);
         List<Data.Models.Document> GetByUsername(string username);
-
+        void DeleteByTaskId(int id);
+        void DeleteByProgramId(int id);
     }
 }

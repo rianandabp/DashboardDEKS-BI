@@ -26,7 +26,9 @@ export class OutlineService{
     };
 
     public async deleteOutline(Id: number): Promise<boolean> {
+        await axios.delete(`${this.API_URL}/task/by/outline/${Id}`);
         const result: any = await axios.delete(`${this.API_URL}/outline/${Id}`);
         return result.data;
     };
+    
 }

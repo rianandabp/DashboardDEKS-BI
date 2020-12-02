@@ -90,6 +90,21 @@ namespace DashboardDeks.Web.Controllers
             return Ok(newDocument);
         }
 
+        [HttpDelete("/api/document/by/task/{id}")]
+        public ActionResult DeleteDocumentByTaskId(int id)
+        {
+            _logger.LogInformation("Deleting a outline by task id");
+            _documentService.DeleteByTaskId(id);
+            return Ok();
+        }
+
+        [HttpDelete("/api/document/by/program/{id}")]
+        public ActionResult DeleteDocumentByProgramId(int id)
+        {
+            _logger.LogInformation("Deleting a outline by program id");
+            _documentService.DeleteByProgramId(id);
+            return Ok();
+        }
 
 
     }

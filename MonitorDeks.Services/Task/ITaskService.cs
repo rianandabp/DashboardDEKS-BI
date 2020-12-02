@@ -15,5 +15,7 @@ namespace DashboardDeks.Services.Task
         ServiceResponse<bool> UpdateTaskStatus(int id);
         Data.Models.Task GetById(int id);
         int TotalTask();
+        void DeleteTaskByOutlineId(int id);
+        void DeleteTaskByProgramId(int id);
     }
 }
