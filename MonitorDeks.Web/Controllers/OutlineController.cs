@@ -77,7 +77,7 @@ namespace DashboardDeks.Web.Controllers
                 ProblemNote = outline.ProblemNote,
                 LastUpdate = outline.LastUpdate
 
-            }).OrderBy(outline => outline.LastUpdate).ToList();
+            }).OrderBy(outline => outline.Deadline).ToList();
 
             return Ok(outlineModels);
         }

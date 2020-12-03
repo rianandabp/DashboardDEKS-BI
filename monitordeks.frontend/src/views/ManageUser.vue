@@ -71,7 +71,7 @@
                             <b-modal :id="'confirmationDelete-' + index + 1" @ok="deleteUser(item.usernameId)">
                                 {{item.name}} access will be deleted
                             </b-modal>
-                            <b-modal :id="item.usernameId" :title="'Edit User'" @show="loadUser(item.usernameId)" @ok="updateUser()">
+                            <b-modal :id="item.usernameId" :title="'Edit User'" @hidden="resetModal" @show="loadUser(item.usernameId)" @ok="updateUser(item.usernameId)">
                                 <b-form-group label="Name" label-for="text" @submit.stop.prevent>
                                     <b-form-input
                                         size="sm"
@@ -82,7 +82,6 @@
 
                                     <b-form-group label="Password" >
                                     <b-form-input
-                                        
                                         type="password"
                                         size="sm"
                                         placeholder="Password"
@@ -140,34 +139,36 @@ const userService = new UserService();
 
 export default class App extends Vue {
 
-    user: IUser[] = [];
+    user: IUser[] = []
     tempUser: IUser = {
         name: '',
         punctualityRating: 0
     };
-    pass: string = '';
+    pass: string = ''
 
     state(){
-        if(this.pass === '') return null;
-        if(this.tempUser.password === this.pass) return true;
-        return false;
+        if(this.pass === '') return null
+        if(this.tempUser.password === this.pass) return true
+        return false
     }
 
     resetModal(){
-        this.tempUser.name = '';
-        this.tempUser.usernameId = '';
-        this.tempUser.password = '';
-        this.pass = '';
+        this.tempUser.name = ''
+        this.tempUser.usernameId = ''
+        this.tempUser.password = ''
+        this.pass = ''
     }
 
     loadUser(id:string){
-        const p = this.user.find(c => c.usernameId==id);
-        this.tempUser.name = p?.name;
+        const p = this.user.find(c => c.usernameId==id)
+        this.tempUser.name = p?.name
     }
-    async updateUser() {
-        if(!this.state()) return;
-        await userService.updateUser(this.tempUser);
-        await this.initialize();
+    async updateUser(username:string) {
+        if(!this.state()) return
+        this.tempUser.usernameId = username;
+        console.log(this.tempUser)
+        await userService.updateUser(this.tempUser)
+        await this.initialize()
     }
 
     async deleteUser(username:string){
@@ -182,7 +183,6 @@ export default class App extends Vue {
     }
 
     async initialize(){
-        console.log(sessionStorage.getItem("response"));
         if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
         if(sessionStorage.getItem("access") != "administrator") return this.$router.back();
         this.user = await userService.getUser();

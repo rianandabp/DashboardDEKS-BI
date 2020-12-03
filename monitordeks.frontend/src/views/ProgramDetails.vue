@@ -41,13 +41,14 @@
                             </b-col>
                         </b-row>
                         <b-row class="content" v-for="(outline,index) in outline" :key="outline.id">
-                            <b-col id="left"> <div id="ini"> <h6 id="name"> {{index + 1}}. <b-link @click="$bvModal.show('A-' + outline.id)">{{outline.name}}</b-link> </h6> </div> 
+                            <b-col id="left"> <div id="ini"> <h6 id="name"> {{index + 1}}. <b-link @click="$bvModal.show('A-' + index)">{{outline.name}}</b-link> </h6> </div> 
                                 <b-progress :value="outline.progressPercentage" :max=100 show-progress animated id="bara"></b-progress>
                             </b-col>
-                                <b-modal :id="'A-' + outline.id" @show="loadOutlineModal(outline.id)" @ok="editOutline(outline.id,outline.programId)" :title="'Edit Outline'">
+                                <b-modal :id="'A-' + index" @show="loadOutlineModal(outline.id)" @hidden="resetOutline" @ok="editOutline(outline.id,outline.programId)" :title="'Edit Outline'">
+                                    
                                     <b-form-group label="Outline Name"  >
                                         <b-form-input
-                                            v-model="editTemp.name"
+                                            :value="name"
                                             size="sm"
                                             placeholder="Write the outline name.."
                                         ></b-form-input>
@@ -55,7 +56,7 @@
                                     <b-form-group label="Progress Note">
                                         <b-form-textarea
                                         id="textarea"
-                                        v-model="editTemp.progressNote"
+                                        v-model="progressNote"
                                         placeholder="Enter something..."
                                         rows="3"
                                         max-rows="6"
@@ -64,14 +65,14 @@
                                     <b-form-group label="Problem Note">
                                         <b-form-textarea
                                             id="textarea2"
-                                            v-model="editTemp.problemNote"
+                                            v-model="problemNote"
                                             placeholder="Enter something..."
                                             rows="3"
                                             max-rows="6"
                                         ></b-form-textarea>
                                     </b-form-group>
                                     <b-form-group label="Deadline"  >
-                                        <b-form-datepicker size="sm" v-model="editTemp.deadline" class="mb-2"></b-form-datepicker>
+                                        <b-form-datepicker size="sm" v-model="deadline" class="mb-2"></b-form-datepicker>
                                     </b-form-group>
                                     <b-button id="dlt" size="sm" variant="danger" @click="deleteOutline(outline.id)"> Delete</b-button>
                                 </b-modal>
@@ -272,8 +273,14 @@ export default class ProgramDetails extends Vue {
     temp: IOutline = {
     };
 
-    editTemp:IOutline = {
-    };
+    name:string = '';
+    progressNote:string = '';
+    problemNote:string = '';
+    deadline:Date = new Date;
+
+    editTemp: IOutline = {
+
+    }
 
     tempTask: ITask = {
         name: ''
@@ -288,12 +295,13 @@ export default class ProgramDetails extends Vue {
         else return true;
     }
 
-    loadOutlineModal(id:number){
-        const e = this.outline.find(c => c.id == id);
-        this.editTemp.name = e?.name;
-        this.editTemp.progressNote = e?.progressNote;
-        this.editTemp.problemNote = e?.problemNote;
-        this.editTemp.deadline = e?.deadline;
+    async loadOutlineModal(id:number){
+        const e = await this.outline.find(c => c.id == id);
+        
+        this.name = await e?.name!;
+        this.progressNote = await e?.progressNote!;
+        this.problemNote = await e?.problemNote!;
+        this.deadline = await e?.deadline!;
     }
 
     
@@ -380,6 +388,10 @@ export default class ProgramDetails extends Vue {
     async editOutline(outlineId:number,programId:number) {
         this.editTemp.id = outlineId;
         this.editTemp.ProgramId = programId;
+        this.editTemp.name = this.name;
+        this.editTemp.problemNote = this.problemNote;
+        this.editTemp.progressNote = this.progressNote;
+        this.editTemp.deadline = this.deadline;
         await outlineService.editOutline(this.editTemp);
         await this.initialize();
     }
