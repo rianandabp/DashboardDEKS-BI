@@ -135,11 +135,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import SideMenu from "@/components/SideMenu.vue";
 import Notification from "@/components/Notification.vue";
-import {IUser} from "@/types/User.d.ts";
-import {IProgram} from "@/types/Program.d.ts";
-import {IOutline} from "@/types/Outline.d.ts";
-import {ITask} from "@/types/Task.d.ts";
-import {ProgramService} from "@/services/product-service";
+import { IUser } from "@/types/User.d.ts";
+import { IProgram } from "@/types/Program.d.ts";
+import { IOutline } from "@/types/Outline.d.ts";
+import { ITask } from "@/types/Task.d.ts";
+import { ProgramService } from "@/services/product-service";
 import { UserService } from "@/services/user-service";
 import { OutlineService } from "@/services/outline-service";
 import { TaskService } from "@/services/task-service";
@@ -342,6 +342,7 @@ p{
 
 .task-detail{
     font-size: 8pt;
+    margin-left: 25px;
 }
 
 .task-left{

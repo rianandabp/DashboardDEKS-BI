@@ -216,7 +216,7 @@
                 <b-row class="dc-list" no-gutters v-for="item in document" :key="item.id">
                     <b-col class="outs"> 
                         <b-row no-gutters id="bold"> {{item.name}}</b-row>
-                        <b-row no-gutters> <b-link :href="'http://' + item.link"> {{item.link}}</b-link></b-row>
+                        <b-row no-gutters> <b-link id="blink" :href="item.link"> {{item.link}}</b-link></b-row>
                         <b-row no-gutters> {{item.description}}</b-row>
                         <b-row no-gutters> {{item.uploadedOn | moment("MMMM Do YYYY")}}</b-row>
                     </b-col>
@@ -479,9 +479,16 @@ h6{
 #dc{
     padding-top:10px ;
 }
+
 h3{
     margin-top: 15px;
 }
+
+a{
+    width: fit-content;
+    overflow: hidden;
+}
+
 .button{
     padding: 8px;
     width: 95%;
