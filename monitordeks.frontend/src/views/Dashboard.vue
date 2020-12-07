@@ -157,7 +157,7 @@ const taskService = new TaskService();
 
 export default class App extends Vue {
     
-    user: IUser[] = []
+    user: IUser[] = [];
     outline: IOutline[] = []
     task: ITask[] = []
     program: IProgram[] = []
@@ -169,6 +169,7 @@ export default class App extends Vue {
         if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
         this.program = await programService.getProgram();
         this.user = await userService.getUser();
+        this.user = this.user.filter(c => c.userAccess == "member");
         this.total = await taskService.getTotal();
     }
 

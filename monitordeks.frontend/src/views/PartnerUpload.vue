@@ -44,7 +44,7 @@
                         </b-form-group>
 
                         <b-form-group label="Silahkan upload lampiran atau foto di" >
-                            <b-link> {{this.partner.uploadLink}} </b-link>
+                            <b-link :href="partner.uploadLink"> {{this.partner.uploadLink}} </b-link>
                         </b-form-group>
 
                         <b-form-group label="Link dokumen yang telah diupload" >
@@ -80,7 +80,7 @@
                             <td class="keterangan" id="mn"> <b-icon icon="journals" @click="$bvModal.show('A-'+item.id)"></b-icon> </td>
                             <td class="kendala"> <b-icon icon="clipboard-x" @click="$bvModal.show('B-'+item.id)"></b-icon> </td>
                             <td class="rencana"> <b-icon icon="bootstrap-reboot" @click="$bvModal.show('C-'+item.id)"></b-icon> </td>
-                            <td class="lampiran"> <b-link>{{item.document}}</b-link> </td>
+                            <td class="lampiran"> <b-link :href="item.document">{{item.document}}</b-link> </td>
                             <td> <b-icon id="dlt" icon="x-circle" @click="$bvModal.show('confirmationDelete-' + item.id)"></b-icon> </td>
                             <b-modal :id="'confirmationDelete-' + item.id" @ok="deleteReport(item.id)">
                                 {{item.createdOn | moment("MMMM Do YYYY")}} report will be deleted

@@ -297,7 +297,7 @@ export default class ProgramDetails extends Vue {
 
     async loadOutlineModal(id:number){
         const e = await this.outline.find(c => c.id == id);
-        
+        console.log(e);
         this.name = await e?.name!;
         this.progressNote = await e?.progressNote!;
         this.problemNote = await e?.problemNote!;
@@ -386,13 +386,13 @@ export default class ProgramDetails extends Vue {
     }
 
     async editOutline(outlineId:number,programId:number) {
-        this.editTemp.id = outlineId;
-        this.editTemp.ProgramId = programId;
-        this.editTemp.name = this.name;
-        this.editTemp.problemNote = this.problemNote;
-        this.editTemp.progressNote = this.progressNote;
-        this.editTemp.deadline = this.deadline;
-        await outlineService.editOutline(this.editTemp);
+        const p = this.outline.find(c => c.id == outlineId);
+        
+        p!.name = this.name;
+        p!.problemNote = this.problemNote;
+        p!.progressNote = this.progressNote;
+        p!.deadline = this.deadline;
+        await outlineService.editOutline(p!);
         await this.initialize();
     }
 

@@ -26,6 +26,7 @@ namespace DashboardDeks.Services.Task
             try
             {
                 _db.Tasks.Add(task);
+                _db.SaveChanges();
 
                 var temp = _db.Outlines.Find(task.OutlineId);
                 var tempProgram = _db.Programs.Find(task.ProgramId);
@@ -34,12 +35,13 @@ namespace DashboardDeks.Services.Task
                 tempProgram.TotalTask += 1;
 
                 _db.Outlines.Update(temp);
+                _db.SaveChanges();
                 _db.Programs.Update(tempProgram);
+                _db.SaveChanges();
 
                 _outlineService.SetProgressPercentage(task.OutlineId);
                 _programService.SetProgressPercentage(task.ProgramId);
 
-                _db.SaveChanges();
 
               
 
@@ -80,28 +82,38 @@ namespace DashboardDeks.Services.Task
 
             try
             {
-                _db.Tasks.Remove(task);
 
                 var temp = _db.Outlines.Find(task.OutlineId);
                 var tempProgram = _db.Programs.Find(task.ProgramId);
 
-                temp.TotalTask -= 1;
-                tempProgram.TotalTask -= 1;
+                _db.Tasks.Remove(task);
+                _db.SaveChanges();
 
+                Console.WriteLine(temp.Id);
+
+                temp.TotalTask = temp.TotalTask - 1;
+                tempProgram.TotalTask = tempProgram.TotalTask - 1;
+
+                Console.WriteLine(temp.TotalTask);
                 if (task.Status)
                 {
                     temp.TaskComplete -= 1;
                     tempProgram.TaskComplete -= 1;
                 }
 
+                Console.WriteLine(temp.TaskComplete);
+
+                if (temp.TotalTask != 0) temp.ProgressPercentage = Convert.ToInt32((Convert.ToSingle(temp.TaskComplete) / Convert.ToSingle(temp.TotalTask)) * 100);
+                else if (temp.TotalTask == 0) temp.ProgressPercentage = 0;
+
+                if (tempProgram.TotalTask != 0) tempProgram.ProgressPercentage = Convert.ToInt32((Convert.ToSingle(tempProgram.TaskComplete) / Convert.ToSingle(tempProgram.TotalTask)) * 100);
+                else if (tempProgram.TotalTask == 0) tempProgram.ProgressPercentage = 0;
+
                 _db.Outlines.Update(temp);
-                _db.Programs.Update(tempProgram);
-
-                _outlineService.SetProgressPercentage(task.OutlineId);
-                _programService.SetProgressPercentage(task.ProgramId);
-
                 _db.SaveChanges();
-                
+                _db.Programs.Update(tempProgram);
+                _db.SaveChanges();
+
 
                 return new ServiceResponse<bool>
                 {
@@ -159,6 +171,10 @@ namespace DashboardDeks.Services.Task
                 if (task.Status == false) task.Status = true;
                 else task.Status = false;
 
+                task.LastUpdate = now;
+                _db.Tasks.Update(task);
+                _db.SaveChanges();
+
                 var temp = _db.Outlines.Find(task.OutlineId);
                 var tempProgram = _db.Programs.Find(task.ProgramId);
 
@@ -166,14 +182,13 @@ namespace DashboardDeks.Services.Task
                 tempProgram.TaskComplete += 1;
 
                 _db.Outlines.Update(temp);
+                _db.SaveChanges();
                 _db.Programs.Update(tempProgram);
+                _db.SaveChanges();
 
                 _outlineService.SetProgressPercentage(task.OutlineId);
                 _programService.SetProgressPercentage(task.ProgramId);
 
-                task.LastUpdate = now;
-                _db.Tasks.Update(task);
-                _db.SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     Time = now,
@@ -241,11 +256,23 @@ namespace DashboardDeks.Services.Task
 
         public void DeleteTaskByOutlineId(int id)
         {
+            var tempOutline = _db.Outlines.Find(id);
+            var tempProgram = _db.Programs.Find(tempOutline.ProgramId);
+
+            tempProgram.TaskComplete -= tempOutline.TaskComplete;
+            tempProgram.TotalTask -= tempOutline.TotalTask;
+
+            _db.Programs.Update(tempProgram);
+            _db.SaveChanges();
+
+            _programService.SetProgressPercentage(tempProgram.Id);
+
             var temp = _db.Tasks.Where(c => c.OutlineId.Equals(id)).ToList();
             foreach(var item in temp)
             {
                 _db.Tasks.Remove(item);
             }
+            
             _db.SaveChanges();
         }
 

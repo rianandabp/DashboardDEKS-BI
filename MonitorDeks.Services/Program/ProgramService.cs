@@ -95,14 +95,16 @@ namespace DashboardDeks.Services.Program
         public void SetProgressPercentage(int id)
         {
             var program = _db.Programs.Find(id);
-            program.ProgressPercentage = Convert.ToInt32((Convert.ToSingle(program.TaskComplete) / Convert.ToSingle(program.TotalTask)) * 100);
+
+            if (program.TotalTask != 0) program.ProgressPercentage = Convert.ToInt32((Convert.ToSingle(program.TaskComplete) / Convert.ToSingle(program.TotalTask)) * 100);
+            else if (program.TotalTask == 0) program.ProgressPercentage = 0;
+
             _db.Programs.Update(program);
             _db.SaveChanges();
         }
 
         public ServiceResponse<bool> UpdateProgram(Data.Models.Program program)
         {
-
             
             var now = DateTime.UtcNow;
             if (program == null)

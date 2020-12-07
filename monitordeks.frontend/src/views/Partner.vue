@@ -114,7 +114,7 @@
                             <td class="keterangan" id="mn"> <b-icon icon="journals" @click="$bvModal.show('A-'+item.id)"></b-icon> </td>
                             <td class="kendala"> <b-icon icon="clipboard-x" @click="$bvModal.show('B-'+item.id)"></b-icon> </td>
                             <td class="rencana"> <b-icon icon="bootstrap-reboot" @click="$bvModal.show('C-'+item.id)"></b-icon> </td>
-                            <td class="lampiran"> <b-link :href="'http://' + item.document">{{item.document}}</b-link> </td>
+                            <td class="lampiran"> <b-link :href="item.document">{{item.document}}</b-link> </td>
 
                             <b-modal :id="'A-'+item.id" :title="'Progress'">
                                 <h6 class="one"> Keterangan </h6>

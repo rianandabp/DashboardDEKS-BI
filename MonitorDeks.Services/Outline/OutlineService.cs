@@ -117,6 +117,7 @@ namespace DashboardDeks.Services.Outline
 
         public ServiceResponse<Data.Models.Outline> UpdateOutline(Data.Models.Outline outline)
         {
+
             try
             {
                 _db.Outlines.Update(outline);

@@ -180,8 +180,13 @@ export default class Program extends Vue {
     }
 
     async updateProgram(id: number){
-        this.temp.id = id;
-        await programService.updateProgram(this.temp);
+        const p = this.program.find(c => c.id == id);
+        p!.name = this.temp.name;
+        p!.description = this.temp.description;
+        p!.startDate = this.temp.startDate;
+        p!.endDate = this.temp.endDate;
+
+        await programService.updateProgram(p!);
         await this.initialize();
     }
 
