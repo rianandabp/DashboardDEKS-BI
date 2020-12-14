@@ -172,7 +172,7 @@ export default class PartnerUpload extends Vue {
     }
 
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.reports = await partnerReportService.getPartnerReport(sessionStorage.getItem("username")!);
         this.partner = await partnerService.getPartnerById(sessionStorage.getItem("username")!);
     }

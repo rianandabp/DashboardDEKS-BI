@@ -423,7 +423,7 @@ export default class ProgramDetails extends Vue {
     }
     
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.program = await programService.getProgramById(parseInt(this.programSession!));
         this.user = await userService.getUser();
         this.document = await documentService.getDocumentByProgram(this.program.id!);

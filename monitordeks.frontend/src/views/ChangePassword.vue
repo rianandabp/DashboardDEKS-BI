@@ -69,7 +69,7 @@ export default class App extends Vue {
     }
 
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.tempUser = await userService.getUserByUsername(sessionStorage.getItem("username")!);
         this.tempUser.password = '';
     }

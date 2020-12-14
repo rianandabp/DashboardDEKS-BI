@@ -166,7 +166,7 @@ export default class App extends Vue {
     selectedProgram: IProgram = {};
 
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.program = await programService.getProgram();
         this.user = await userService.getUser();
         this.user = this.user.filter(c => c.userAccess == "member");

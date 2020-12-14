@@ -217,7 +217,8 @@ export default class Partner extends Vue {
     }
 
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        console.log(sessionStorage.getItem("response"));
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.program = await programService.getProgram();
     }
 

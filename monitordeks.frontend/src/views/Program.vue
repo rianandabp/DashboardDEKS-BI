@@ -159,7 +159,7 @@ export default class Program extends Vue {
     }
 
     async initialize(){
-        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === "null") return this.$router.push('/login');
+        if(sessionStorage.getItem("response") === "false" || sessionStorage.getItem("response") === null) return this.$router.push('/login');
         this.program = await programService.getProgram();
         this.user = await userService.getUser();
     }
