@@ -89,8 +89,6 @@ namespace DashboardDeks.Services.Task
                 _db.Tasks.Remove(task);
                 _db.SaveChanges();
 
-                Console.WriteLine(temp.Id);
-
                 temp.TotalTask = temp.TotalTask - 1;
                 tempProgram.TotalTask = tempProgram.TotalTask - 1;
 
@@ -101,7 +99,8 @@ namespace DashboardDeks.Services.Task
                     tempProgram.TaskComplete -= 1;
                 }
 
-                Console.WriteLine(temp.TaskComplete);
+                Console.WriteLine(temp.TaskComplete + " " + temp.TotalTask);
+                Console.WriteLine(tempProgram.TaskComplete + " " + tempProgram.TotalTask);
 
                 if (temp.TotalTask != 0) temp.ProgressPercentage = Convert.ToInt32((Convert.ToSingle(temp.TaskComplete) / Convert.ToSingle(temp.TotalTask)) * 100);
                 else if (temp.TotalTask == 0) temp.ProgressPercentage = 0;

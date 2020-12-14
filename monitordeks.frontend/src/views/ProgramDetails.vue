@@ -48,7 +48,7 @@
                                     
                                     <b-form-group label="Outline Name"  >
                                         <b-form-input
-                                            :value="name"
+                                            v-model="name"
                                             size="sm"
                                             placeholder="Write the outline name.."
                                         ></b-form-input>
