@@ -63,7 +63,7 @@ namespace DashboardDeks.Web.Controllers
                 TaskDone = user.TaskDone,
                 TaskLate = user.TaskLate
 
-            }).OrderByDescending(c => (c.TaskDone - c.TaskLate)).ToList();
+            }).OrderByDescending(c => (2 * c.TaskDone + c.TaskLate)).ToList();
 
             return Ok(userModels);
         }
