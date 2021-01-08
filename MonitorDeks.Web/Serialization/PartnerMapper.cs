@@ -16,10 +16,10 @@ namespace DashboardDeks.Web.Serialization
                 UsernameId = partner.UsernameId,
                 ProgramId = partner.ProgramId,
                 PartnerName = partner.PartnerName,
-                Password = partner.Password,
                 Location = partner.Location,
                 CaretakerName = partner.CaretakerName,
                 CaretakerPhoneNumber = partner.CaretakerPhoneNumber,
+                Password = partner.Password,
                 UploadLink = partner.UploadLink
 
             };
@@ -31,11 +31,11 @@ namespace DashboardDeks.Web.Serialization
             {
                 UsernameId = partner.UsernameId,
                 ProgramId = partner.ProgramId,
-                Password = partner.Password,
                 PartnerName = partner.PartnerName,
                 Location = partner.Location,
                 CaretakerName = partner.CaretakerName,
                 CaretakerPhoneNumber = partner.CaretakerPhoneNumber,
+                Password = partner.Password,
                 UploadLink = partner.UploadLink
 
             };

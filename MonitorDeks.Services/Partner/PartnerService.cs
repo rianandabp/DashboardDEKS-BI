@@ -98,6 +98,7 @@ namespace DashboardDeks.Services.Partner
                 _db.SaveChanges();
                 return new ServiceResponse<Data.Models.Partner>
                 {
+                 
                     IsSuccess = true,
                     Message = "New Partner Updated",
                     Time = DateTime.UtcNow,

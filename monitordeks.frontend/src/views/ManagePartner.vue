@@ -30,12 +30,12 @@
                             <b-modal :id="'confirmationDelete-' + item.usernameId" @ok="deleteUser(item.usernameId)">
                                 {{item.partnerName}} partner will be deleted
                             </b-modal>
-                            <b-modal :id="item.usernameId" :title="'Edit Partner'" @ok="updatePartner()">
+                            <b-modal :id="item.usernameId" :title="'Edit Partner'" @ok="updatePartner(item.usernameId)">
                                 <b-form-group label="Name" label-for="text" @submit.stop.prevent>
                                     <b-form-input
                                         size="sm"
                                         placeholder="Name"
-                                        v-model="tempPartner.partnerName"
+                                        v-model="partnerName"
                                     ></b-form-input>
                                     </b-form-group>
 
@@ -43,7 +43,7 @@
                                     <b-form-input
                                         size="sm"
                                         placeholder="Location.."
-                                        v-model="tempPartner.location"
+                                        v-model="location"
                                     ></b-form-input>
                                     </b-form-group>
 
@@ -51,7 +51,7 @@
                                     <b-form-input
                                         size="sm"
                                         placeholder="Caretaker.."
-                                        v-model="tempPartner.caretakerName"
+                                        v-model="caretakerName"
                                     ></b-form-input>
                                     </b-form-group>
 
@@ -59,7 +59,7 @@
                                     <b-form-input
                                         size="sm"
                                         placeholder="Phone number.."
-                                        v-model="tempPartner.caretakerPhoneNumber"
+                                        v-model="caretakerPhoneNumber"
                                     ></b-form-input>
                                     </b-form-group>
 
@@ -67,16 +67,8 @@
                                         <b-form-input
                                             size="sm"
                                             placeholder="Enter link for partner to upload the document.."
-                                            v-model="tempPartner.uploadLink"
+                                            v-model="uploadLink"
                                         ></b-form-input>
-                                    </b-form-group>
-
-                                    <b-form-group label="Username" label-for="text" @submit.stop.prevent>
-                                    <b-form-input
-                                        size="sm"
-                                        placeholder="Username.."
-                                        v-model="tempPartner.usernameId"
-                                    ></b-form-input>
                                     </b-form-group>
 
                                     <b-form-group label="Password" label-for="dropdown-form-password">
@@ -84,7 +76,7 @@
                                         type="password"
                                         size="sm"
                                         placeholder="Password.."
-                                        v-model="tempPartner.password"
+                                        v-model="password"
                                     ></b-form-input>
                                     </b-form-group>
 
@@ -126,32 +118,47 @@ const partnerService = new PartnerService();
 export default class App extends Vue {
 
     partner: IPartner[] = [];
-    tempPartner: IPartner = {
-        caretakerPhoneNumber: ''
-    };
+
+    usernameId:string = ''
+    password:string = ''
+    partnerName:string = ''
+    location:string = ''
+    caretakerName:string = ''
+    caretakerPhoneNumber:string = ''
+    uploadLink:string = ''
+
     pass: string = '';
 
     async loadPartner(id:string){
         const p = await this.partner.find(c => c.usernameId==id);
-        console.log(p?.partnerName);
-        this.tempPartner.partnerName = p?.partnerName;
-        this.tempPartner.location = p?.location;
-        this.tempPartner.caretakerName = p?.caretakerName;
-        this.tempPartner.caretakerPhoneNumber = p!.caretakerPhoneNumber;
-        this.tempPartner.uploadLink = p?.uploadLink;
-        this.tempPartner.usernameId = p?.usernameId;
+        this.partnerName = p?.partnerName!;
+        this.location = p?.location!;
+        this.caretakerName = p?.caretakerName!;
+        this.caretakerPhoneNumber = p!.caretakerPhoneNumber!;
+        this.uploadLink = p?.uploadLink!;
+        this.usernameId = p?.usernameId!;
     }
 
     
     passState() {
         if(this.pass === '') return null;
-        if(this.pass === this.tempPartner.password) return true;
+        if(this.pass === this.password) return true;
         return false; 
     }
 
-    async updatePartner() {
+    async updatePartner(Id:string) {
         if(!this.passState()) return;
-        await partnerService.updatePartner(this.tempPartner);
+        const p = this.partner.find(c => c.usernameId == Id);
+
+        p!.password = this.password;
+        p!.partnerName = this.partnerName;
+        p!.location = this.location;
+        p!.caretakerName = this.caretakerName;
+        p!.caretakerPhoneNumber = this.caretakerPhoneNumber;
+        p!.uploadLink = this.uploadLink;
+
+        console.log(p);
+        await partnerService.updatePartner(p!);
         await this.initialize();
     }
 
@@ -199,6 +206,7 @@ export default class App extends Vue {
     display: flex;
     flex-direction: row;
 }
+
 .cpForm{
     width: 200px;
 }
@@ -240,9 +248,11 @@ export default class App extends Vue {
     text-align: center;
     margin-left: 33%;
 }
+
 #tb{
     width: 100%;
 }
+
 .form{
     text-align: center;
 }

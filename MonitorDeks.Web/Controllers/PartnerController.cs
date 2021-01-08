@@ -60,6 +60,7 @@ namespace DashboardDeks.Web.Controllers
                 return BadRequest(ModelState);
             }
 
+
             var partnerData = PartnerMapper.SerializePartner(partner);
             var response = _partnerService.UpdatePartner(partnerData);
             return Ok(response);
