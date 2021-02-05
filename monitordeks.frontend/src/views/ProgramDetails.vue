@@ -407,6 +407,7 @@ export default class ProgramDetails extends Vue {
     }
 
     async addTask(outlineId: number, selectedUser: string) {
+        this.tempTask.id = undefined;
         this.tempTask.assignedTo = selectedUser;
         this.tempTask.outlineId = outlineId;
         this.tempTask.programId = this.program.id!;
